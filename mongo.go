@@ -127,12 +127,12 @@ func (c *mongoCollection) CountAggregation(ctx context.Context, pipeline []any) 
 	}
 	p := append(pipeline, bson.M{"$count": "count"})
 	cursor, err := c.collection.Aggregate(ctx, p)
-	defer func() {
-		_ = cursor.Close(ctx)
-	}()
 	if err != nil {
 		return 0, wrapError(err)
 	}
+	defer func() {
+		_ = cursor.Close(ctx)
+	}()
 	if !cursor.Next(ctx) {
 		return 0, nil
 	}
