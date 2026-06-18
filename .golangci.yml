@@ -5,10 +5,19 @@ run:
 
 linters:
   enable:
+    - govet
+    - ineffassign
     - misspell
+    - staticcheck
     - unconvert
+    - unused
   exclusions:
     rules:
       - path: _test\.go
         linters:
           - unused
+
+formatters:
+  enable:
+    - gofmt
+    - goimports
