@@ -383,7 +383,7 @@ func (c *Collection) meta(ctx context.Context, id string, v *version.VersionOrRe
 
 func (c *Collection) metas(ctx context.Context, ids []string) (map[string]*Meta, error) {
 	type idDoc struct {
-		ID string
+		ID string `bson:"id"`
 	}
 	consumer := SliceConsumer[Document[*idDoc]]{}
 	q := apply(version.Eq(version.Latest.OrVersion()), bson.M{

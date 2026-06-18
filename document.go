@@ -58,9 +58,6 @@ func (d *Document[T]) MarshalBSON() ([]byte, error) {
 }
 
 func (d *Document[T]) UnmarshalBSON(b []byte) error {
-	if d == nil {
-		*d = Document[T]{}
-	}
 	if err := bson.Unmarshal(b, &d.Meta); err != nil {
 		return err
 	}
