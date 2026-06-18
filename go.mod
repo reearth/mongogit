@@ -1,6 +1,6 @@
 module github.com/reearth/mongogit
 
-go 1.26.0
+go 1.24.0
 
 require (
 	github.com/chrispappas/golang-generics-set v1.0.1
