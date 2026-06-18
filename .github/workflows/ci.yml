@@ -23,6 +23,8 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+    env:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
     services:
       mongo:
         image: ${{ vars.MONGO_IMAGE || 'mongo:6' }}
@@ -43,8 +45,8 @@ jobs:
           MONGO_URI: mongodb://localhost:27017
         run: go test -race -coverprofile=coverage.txt ./...
       - name: upload coverage
-        if: ${{ secrets.CODECOV_TOKEN != '' }}
+        if: ${{ env.CODECOV_TOKEN != '' }}
         uses: codecov/codecov-action@v4
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+          token: ${{ env.CODECOV_TOKEN }}
           files: coverage.txt
