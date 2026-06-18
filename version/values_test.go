@@ -59,12 +59,12 @@ func TestValues_Get(t *testing.T) {
 	got.value = "d"
 	assert.Equal(t, "foo3", v.Get(vz.OrRef()).Value())
 
-	got = v.Get(Ref(Latest).OrVersion())
+	got = v.Get(Latest.OrVersion())
 	assert.Equal(t, NewValue(vz, nil, NewRefs(Latest), time.Time{}, "foo3"), got)
 
 	// cannot modify
 	got.value = "d"
-	assert.Equal(t, "foo3", v.Get(Ref(Latest).OrVersion()).Value())
+	assert.Equal(t, "foo3", v.Get(Latest.OrVersion()).Value())
 
 	assert.Nil(t, v.Get(New().OrRef()))
 	assert.Nil(t, v.Get(Ref("main2").OrVersion()))
