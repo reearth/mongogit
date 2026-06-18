@@ -11,8 +11,9 @@ func TestNowMock(t *testing.T) {
 	if got := Now(); !got.Equal(fixed) {
 		t.Fatalf("want %v, got %v", fixed, got)
 	}
+	before := time.Now()
 	reset()
-	if Now().Equal(fixed) {
+	if Now().Before(before) {
 		t.Fatalf("expected real clock after reset")
 	}
 }
