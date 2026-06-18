@@ -4,7 +4,6 @@ import (
 	"testing"
 	"time"
 
-	"github.com/reearth/mongogit/internal/clock"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -151,8 +150,9 @@ func TestValues_Clone(t *testing.T) {
 }
 
 func TestValues_Add(t *testing.T) {
-	now := clock.Now()
-	defer clock.Mock(now)()
+	now := time.Now()
+	defer func(o func() time.Time) { Now = o }(Now)
+	Now = func() time.Time { return now }
 
 	vx, vy := New(), New()
 	v := &Values[string]{

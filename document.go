@@ -3,7 +3,6 @@ package mongogit
 import (
 	"time"
 
-	"github.com/reearth/mongogit/internal/clock"
 	"github.com/reearth/mongogit/version"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -28,7 +27,7 @@ func NewDocument[T any](v *version.Value[T]) *Document[T] {
 	return &Document[T]{
 		Data: v.Value(),
 		Meta: Meta{
-			ObjectID: primitive.NewObjectIDFromTimestamp(clock.Now()),
+			ObjectID: primitive.NewObjectIDFromTimestamp(version.Now()),
 			Version:  v.Version(),
 			Parents:  v.Parents().Values(),
 			Refs:     v.Refs().Values(),

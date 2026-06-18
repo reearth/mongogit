@@ -4,7 +4,6 @@ import (
 	"errors"
 
 	"github.com/chrispappas/golang-generics-set/set"
-	"github.com/reearth/mongogit/internal/clock"
 	"github.com/samber/lo"
 )
 
@@ -101,7 +100,7 @@ func (v *Values[V]) Add(value V, parent *VersionOrRef) {
 		return
 	}
 
-	t := clock.Now()
+	t := Now()
 	p := lo.FromPtrOr(parent, Latest.OrVersion())
 	vv := v.get(p)
 	if vv != nil {

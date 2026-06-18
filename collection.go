@@ -6,7 +6,6 @@ import (
 	"io"
 	"time"
 
-	"github.com/reearth/mongogit/internal/clock"
 	"github.com/reearth/mongogit/version"
 	"github.com/samber/lo"
 	"go.mongodb.org/mongo-driver/bson"
@@ -125,7 +124,7 @@ func (c *Collection) SaveOne(
 	var refs []version.Ref
 	actualVr.Match(nil, func(r version.Ref) { refs = []version.Ref{r} })
 	newmeta := Meta{
-		ObjectID: primitive.NewObjectIDFromTimestamp(clock.Now()),
+		ObjectID: primitive.NewObjectIDFromTimestamp(version.Now()),
 		Version:  version.New(),
 		Refs:     refs,
 	}
@@ -182,7 +181,7 @@ func (c *Collection) SaveMany(ctx context.Context, ids []string, docs []any) err
 		id, doc := ids[i], docs[i]
 
 		newMeta := Meta{
-			ObjectID: primitive.NewObjectIDFromTimestamp(clock.Now()),
+			ObjectID: primitive.NewObjectIDFromTimestamp(version.Now()),
 			Version:  version.New(),
 			Refs:     []version.Ref{version.Latest},
 		}
