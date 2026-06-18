@@ -1,0 +1,45 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: ${{ vars.GO_VERSION || '1.26.x' }}
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v7
+        with:
+          version: ${{ vars.GOLANGCI_LINT_VERSION || 'v2.3.0' }}
+
+  test:
+    runs-on: ubuntu-latest
+    services:
+      mongo:
+        image: ${{ vars.MONGO_IMAGE || 'mongo:6' }}
+        ports:
+          - 27017:27017
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: ${{ vars.GO_VERSION || '1.26.x' }}
+      - name: test
+        env:
+          MONGO_URI: mongodb://localhost:27017
+        run: go test -race -coverprofile=coverage.txt ./...
+      - name: upload coverage
+        if: ${{ secrets.CODECOV_TOKEN != '' }}
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: coverage.txt
