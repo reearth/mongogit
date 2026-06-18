@@ -32,10 +32,10 @@ func (c *Cursor) StringRef() *string {
 
 // CursorPagination is Relay-style cursor pagination.
 type CursorPagination struct {
-	Before *Cursor
-	After  *Cursor
-	First  *int64
-	Last   *int64
+	Before *Cursor `json:"before"`
+	After  *Cursor `json:"after"`
+	First  *int64  `json:"first"`
+	Last   *int64  `json:"last"`
 }
 
 func (p *CursorPagination) Clone() *CursorPagination {
@@ -55,8 +55,8 @@ func (p CursorPagination) Wrap() *Pagination {
 }
 
 type OffsetPagination struct {
-	Offset int64
-	Limit  int64
+	Offset int64 `json:"offset"`
+	Limit  int64 `json:"limit"`
 }
 
 func (p OffsetPagination) Wrap() *Pagination {
