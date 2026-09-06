@@ -12,6 +12,10 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2
+        with:
+          egress-policy: audit
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
         with:
@@ -36,6 +40,10 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2
+        with:
+          egress-policy: audit
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
         with:
